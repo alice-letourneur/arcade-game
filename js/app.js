@@ -28,7 +28,7 @@ Enemy.prototype.render = function() {
 
 var Player = function(x, y, speed) {
     this.sprite = 'images/char-horn-girl.png';
-    this.x = 400;
+    this.x = 200;
     this.y = 400;
     this.speed = 100;
 }
@@ -47,7 +47,7 @@ Player.prototype.render = function() {
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 
-var allEnemies = [new Enemy(100, 50, 50)];
+var allEnemies = [new Enemy(-100, 60, 50), new Enemy(-150, 60, 75), new Enemy(-100, 140, 100), new Enemy(-100, 140, 50), new Enemy(-100, 225, 25), new Enemy(-100, 225, 75)];
 
 // Place the player object in a variable called player
 
