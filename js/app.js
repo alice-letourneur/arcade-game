@@ -17,6 +17,10 @@ Enemy.prototype.update = function(dt) {
     // You should multiply any movement by the dt parameter
     // which will ensure the game runs at the same speed for
     // all computers.
+    this.x = this.x + this.speed * dt;
+    if (this.x > 505) {
+        this.x = 0;
+    }
 };
 
 // Draw the enemy on the screen, required method for game
@@ -29,7 +33,7 @@ Enemy.prototype.render = function() {
 var Player = function(x, y, speed) {
     this.sprite = 'images/char-horn-girl.png';
     this.x = 200;
-    this.y = 400;
+    this.y = 390;
     this.speed = 100;
 }
 
@@ -43,6 +47,20 @@ Player.prototype.render = function() {
 // This class requires an update(), render() and
 // a handleInput() method.
 
+Player.prototype.handleInput = function(key) {
+    if (key == "left") {
+        this.x = this.x - 100;
+    }
+    if (key == "right") {
+        this.x = this.x + 100;
+    }
+    if (key == "up") {
+        this.y = this.y - 80;
+    }
+    if (key == "down") {
+        this.y = this.y + 80;
+    }
+};
 
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
