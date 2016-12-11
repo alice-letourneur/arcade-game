@@ -39,6 +39,19 @@ var Player = function(x, y, speed) {
 
 Player.prototype.update = function(dt) {
 
+//Making sure the Player can not move off screen
+    if (this.x > 450) {
+        this.x = 400;
+    }
+    if (this.x < 0) {
+        this.x = 0;
+    }
+    if (this.y > 400) {
+        this.y = 390;
+    }
+    if (this.y < 0) {
+        this.y = -10;
+    }
 };
 
 Player.prototype.render = function() {
