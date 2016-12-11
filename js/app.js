@@ -33,6 +33,13 @@ var Player = function(x, y, speed) {
     this.speed = 100;
 }
 
+Player.prototype.update = function(dt) {
+
+};
+
+Player.prototype.render = function() {
+    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+};
 // This class requires an update(), render() and
 // a handleInput() method.
 
