@@ -27,19 +27,19 @@ Enemy.prototype.update = function(dt) {
 };
 
 // Drew boxes to figure out the 2D collisions detection
-function drawBox(x, y, width, height, color) {
-    ctx.beginPath();
-    ctx.rect(x, y, width, height);
-    ctx.lineWidth = 2;
-    ctx.strokeStyle = color;
-    ctx.stroke();
-};
+// function drawBox(x, y, width, height, color) {
+//     ctx.beginPath();
+//     ctx.rect(x, y, width, height);
+//     ctx.lineWidth = 2;
+//     ctx.strokeStyle = color;
+//     ctx.stroke();
+// };
 
 // Draw the enemy on the screen, required method for game
 Enemy.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y)
     // Drew boxes to figure out the 2D collisions detection
-    drawBox(this.x, this.y + 76 , 100, 67, "yellow");
+    // drawBox(this.x, this.y + 76 , 100, 67, "yellow");
 };
 
 
@@ -48,7 +48,7 @@ Enemy.prototype.render = function() {
 var Player = function(x, y, speed) {
     this.sprite = 'images/char-horn-girl.png';
     this.x = 300;
-    this.y = 410;
+    this.y = 480;
     this.speed = 100;
     this.width = 70;
     this.height = 75;
@@ -64,18 +64,18 @@ Player.prototype.update = function(dt) {
     if (this.x < 0) {
         this.x = 500;
     }
-    if (this.y > 400) {
-        this.y = 390;
+    if (this.y > 500) {
+        this.y = 480;
     }
-    if (this.y < -10) {
-        this.y = -10;
+    if (this.y < 50) {
+        this.reset();
     }
 };
 
 Player.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 // Drew boxes to figure out the 2D collisions detection
-    drawBox(this.x + 8, this.y + 60, 77, 80, "red");
+    // drawBox(this.x + 8, this.y + 60, 77, 80, "red");
 };
 // This class requires an update(), render() and
 // a handleInput() method.
@@ -105,11 +105,13 @@ Rock.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite),this.x, this.y);
 };
 
-var allRocks = [new Rock(0, 390), new Rock(100, 390), new Rock(200, 390), new Rock(200, 300), new Rock(200, 390)];
+var allRocks = [new Rock(0, 480), new Rock(100, 480), new Rock(200, 480), new Rock(200, 390), new Rock(305, 50), new Rock(405, 50)];
+
+
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 
-var allEnemies = [new Enemy(-430, 60, 50), new Enemy(-150, 60, 75), new Enemy(-100, 140, 100), new Enemy(-100, 140, 50), new Enemy(-100, 225, 25), new Enemy(-100, 225, 75)];
+var allEnemies = [new Enemy(-430, 310, 50), new Enemy(-150, 310, 75), new Enemy(-100, 140, 100), new Enemy(-100, 140, 50), new Enemy(-100, 225, 25), new Enemy(-100, 225, 75)];
 
 
 Player.prototype.checkCollisions = function() {
@@ -129,7 +131,7 @@ var player = new Player();
 
 Player.prototype.reset = function() {
     this.x = 300;
-    this.y = 390;
+    this.y = 480;
 };
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
