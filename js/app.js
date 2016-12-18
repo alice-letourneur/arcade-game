@@ -1,3 +1,4 @@
+
 // Enemies our player must avoid
 var Enemy = function(x, y, speed) {
     // Variables applied to each of our instances go here,
@@ -25,10 +26,22 @@ Enemy.prototype.update = function(dt) {
     }
 };
 
+// Drew boxes to figure out the 2D collisions detection
+// function drawBox(x, y, width, height, color) {
+//     ctx.beginPath();
+//     ctx.rect(x, y, width, height);
+//     ctx.lineWidth = 2;
+//     ctx.strokeStyle = color;
+//     ctx.stroke();
+// };
+
 // Draw the enemy on the screen, required method for game
 Enemy.prototype.render = function() {
-    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+    ctx.drawImage(Resources.get(this.sprite), this.x, this.y)
+    // Drew boxes to figure out the 2D collisions detection
+    // drawBox(this.x, this.y + 76 , 100, 67, "yellow");
 };
+
 
 // Now write your own player class
 
@@ -60,7 +73,9 @@ Player.prototype.update = function(dt) {
 };
 
 Player.prototype.render = function() {
-    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+    ctx.drawImage(Resources.get(this.sprite), this.x, this.y)
+// Drew boxes to figure out the 2D collisions detection
+    // drawBox(this.x + 8, this.y + 60, 77, 80, "red");
 };
 // This class requires an update(), render() and
 // a handleInput() method.
@@ -91,10 +106,10 @@ var allEnemies = [new Enemy(-100, 60, 50), new Enemy(-150, 60, 75), new Enemy(-1
 Player.prototype.checkCollisions = function() {
     for (var i = 0; i < allEnemies.length; i++) {
         var enemy = allEnemies[i];
-        if (enemy.x < this.x + this.width &&
-        enemy.x + enemy.width > this.x &&
-        enemy.y < this.y + this.height &&
-        enemy.height + enemy.y > this.y) {
+        if (enemy.x < (this.x + 8) + this.width &&
+        enemy.x + enemy.width > (this.x + 8) &&
+        (enemy.y + 76) < (this.y + 60) + this.height &&
+        enemy.height + (enemy.y + 76) > (this.y + 60)) {
             this.reset();
         };
     };
