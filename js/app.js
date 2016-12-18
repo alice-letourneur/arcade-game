@@ -21,25 +21,25 @@ Enemy.prototype.update = function(dt) {
     // which will ensure the game runs at the same speed for
     // all computers.
     this.x = this.x + this.speed * dt;
-    if (this.x > 505) {
+    if (this.x > 606) {
         this.x = 0;
     }
 };
 
 // Drew boxes to figure out the 2D collisions detection
-// function drawBox(x, y, width, height, color) {
-//     ctx.beginPath();
-//     ctx.rect(x, y, width, height);
-//     ctx.lineWidth = 2;
-//     ctx.strokeStyle = color;
-//     ctx.stroke();
-// };
+function drawBox(x, y, width, height, color) {
+    ctx.beginPath();
+    ctx.rect(x, y, width, height);
+    ctx.lineWidth = 2;
+    ctx.strokeStyle = color;
+    ctx.stroke();
+};
 
 // Draw the enemy on the screen, required method for game
 Enemy.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y)
     // Drew boxes to figure out the 2D collisions detection
-    // drawBox(this.x, this.y + 76 , 100, 67, "yellow");
+    drawBox(this.x, this.y + 76 , 100, 67, "yellow");
 };
 
 
@@ -47,8 +47,8 @@ Enemy.prototype.render = function() {
 
 var Player = function(x, y, speed) {
     this.sprite = 'images/char-horn-girl.png';
-    this.x = 200;
-    this.y = 390;
+    this.x = 300;
+    this.y = 410;
     this.speed = 100;
     this.width = 70;
     this.height = 75;
@@ -58,24 +58,24 @@ Player.prototype.update = function(dt) {
     this.checkCollisions();
 
 //Making sure the Player can not move off screen
-    if (this.x > 450) {
+    if (this.x > 550) {
         this.x = 0;
     }
     if (this.x < 0) {
-        this.x = 400;
+        this.x = 500;
     }
     if (this.y > 400) {
         this.y = 390;
     }
-    if (this.y < 0) {
-        this.reset();
+    if (this.y < -10) {
+        this.y = -10;
     }
 };
 
 Player.prototype.render = function() {
-    ctx.drawImage(Resources.get(this.sprite), this.x, this.y)
+    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 // Drew boxes to figure out the 2D collisions detection
-    // drawBox(this.x + 8, this.y + 60, 77, 80, "red");
+    drawBox(this.x + 8, this.y + 60, 77, 80, "red");
 };
 // This class requires an update(), render() and
 // a handleInput() method.
@@ -88,19 +88,28 @@ Player.prototype.handleInput = function(key) {
         this.x = this.x + 100;
     }
     if (key == "up") {
-        this.y = this.y - 80;
+        this.y = this.y - 81;
     }
     if (key == "down") {
-        this.y = this.y + 80;
+        this.y = this.y + 81;
     }
 };
 
+var Rock = function(x, y) {
+    this.sprite = 'images/Rock.png';
+    this.x = x;
+    this.y = y
+}
 
+Rock.prototype.render = function() {
+    ctx.drawImage(Resources.get(this.sprite),this.x, this.y);
+};
 
+var allRocks = [new Rock(0, 390), new Rock(100, 390), new Rock(200, 390), new Rock(200, 300), new Rock(200, 390)];
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 
-var allEnemies = [new Enemy(-100, 60, 50), new Enemy(-150, 60, 75), new Enemy(-100, 140, 100), new Enemy(-100, 140, 50), new Enemy(-100, 225, 25), new Enemy(-100, 225, 75)];
+var allEnemies = [new Enemy(-430, 60, 50), new Enemy(-150, 60, 75), new Enemy(-100, 140, 100), new Enemy(-100, 140, 50), new Enemy(-100, 225, 25), new Enemy(-100, 225, 75)];
 
 
 Player.prototype.checkCollisions = function() {
@@ -119,7 +128,7 @@ Player.prototype.checkCollisions = function() {
 var player = new Player();
 
 Player.prototype.reset = function() {
-    this.x = 200;
+    this.x = 300;
     this.y = 390;
 };
 // This listens for key presses and sends the keys to your
