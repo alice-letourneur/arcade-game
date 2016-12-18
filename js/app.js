@@ -91,14 +91,13 @@ var allEnemies = [new Enemy(-100, 60, 50), new Enemy(-150, 60, 75), new Enemy(-1
 Player.prototype.checkCollisions = function() {
     for (var i = 0; i < allEnemies.length; i++) {
         var enemy = allEnemies[i];
+        if (enemy.x < this.x + this.width &&
+        enemy.x + enemy.width > this.x &&
+        enemy.y < this.y + this.height &&
+        enemy.height + enemy.y > this.y) {
+            this.reset();
+        };
     };
-
-    if (enemy.x < this.x + this.width &&
-    enemy.x + enemy.width > this.x &&
-    enemy.y < this.y + this.height &&
-    enemy.height + enemy.y > this.y) {
-        this.reset();
-    }
 };
 // Place the player object in a variable called player
 
