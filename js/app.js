@@ -9,6 +9,8 @@ var Enemy = function(x, y, speed) {
     this.x = x;
     this.y = y;
     this.speed = speed;
+    this.width = 100;
+    this.height = 67;
 };
 
 // Update the enemy's position, required method for game
@@ -35,22 +37,25 @@ var Player = function(x, y, speed) {
     this.x = 200;
     this.y = 390;
     this.speed = 100;
+    this.width = 70;
+    this.height = 75;
 }
 
 Player.prototype.update = function(dt) {
+    this.checkCollisions();
 
 //Making sure the Player can not move off screen
     if (this.x > 450) {
-        this.x = 400;
+        this.x = 0;
     }
     if (this.x < 0) {
-        this.x = 0;
+        this.x = 400;
     }
     if (this.y > 400) {
         this.y = 390;
     }
     if (this.y < 0) {
-        this.y = -10;
+        this.reset();
     }
 };
 
@@ -75,15 +80,34 @@ Player.prototype.handleInput = function(key) {
     }
 };
 
+
+
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 
 var allEnemies = [new Enemy(-100, 60, 50), new Enemy(-150, 60, 75), new Enemy(-100, 140, 100), new Enemy(-100, 140, 50), new Enemy(-100, 225, 25), new Enemy(-100, 225, 75)];
 
+
+Player.prototype.checkCollisions = function() {
+    for (var i = 0; i < allEnemies.length; i++) {
+        var enemy = allEnemies[i];
+    };
+
+    if (enemy.x < this.x + this.width &&
+    enemy.x + enemy.width > this.x &&
+    enemy.y < this.y + this.height &&
+    enemy.height + enemy.y > this.y) {
+        this.reset();
+    }
+};
 // Place the player object in a variable called player
 
 var player = new Player();
 
+Player.prototype.reset = function() {
+    this.x = 200;
+    this.y = 390;
+};
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
 document.addEventListener('keyup', function(e) {
