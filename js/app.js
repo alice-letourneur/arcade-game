@@ -136,18 +136,18 @@ var allRocks = [new Rock(200, 390), new Rock(305, 50), new Rock(405, 50)];
 
 // ----------------------------------- Win ----------------------------------------
 
-// var Win = function(x, y) {
-//     this.sprite = 'images/Selector.png';
-//     this.x = 500;
-//     this.y = 76;
-// };
+var WinGame = function(x, y) {
+    this.sprite = 'images/Selector.png';
+    this.x = 500;
+    this.y = 76;
+};
 
-// Win.prototype.render = function() {
-//     ctx.drawImage(Resources.get(this.sprite),this.x, this.y);
-//     drawBox(this.x + 8, this.y + 70, 85, 85, "green");
-// };
+WinGame.prototype.render = function() {
+    ctx.drawImage(Resources.get(this.sprite),this.x, this.y);
+    drawBox(this.x + 8, this.y + 70, 85, 85, "green");
+};
 
-// var win = new Win();
+var winGame = new WinGame();
 
 //----------------------------------- Event listener ------------------------------
 
