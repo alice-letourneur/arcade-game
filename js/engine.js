@@ -114,9 +114,8 @@ var Engine = (function(global) {
                 'images/stone-block.png',   // Row 2 of 3 of stone
                 'images/stone-block.png',   // Row 3 of 3 of stone
                 'images/grass-block.png',   // Row 1 of 2 of grass
-                'images/grass-block.png'    // Row 2 of 2 of grass
             ],
-            numRows = 7,
+            numRows = 6,
             numCols = 6,
             row, col;
 
@@ -151,11 +150,11 @@ var Engine = (function(global) {
         allEnemies.forEach(function(enemy) {
             enemy.render();
         });
-
         player.render();
         allRocks.forEach(function(rock) {
-        rock.render();
+            rock.render();
         });
+        // win.render();
     }
 
     /* This function does nothing but it could have been a good place to
@@ -180,8 +179,8 @@ var Engine = (function(global) {
         'images/Selector.png',
         'images/Rock.png',
         'images/Key.png'
-
     ]);
+
     Resources.onReady(init);
 
     /* Assign the canvas' context object to the global variable (the window

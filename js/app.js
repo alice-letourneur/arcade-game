@@ -1,11 +1,15 @@
 
-// Enemies our player must avoid
-var Enemy = function(x, y, speed) {
-    // Variables applied to each of our instances go here,
-    // we've provided one for you to get started
+// Drew boxes to figure out the 2D collisions detection
+// function drawBox(x, y, width, height, color) {
+//     ctx.beginPath();
+//     ctx.rect(x, y, width, height);
+//     ctx.lineWidth = 2;
+//     ctx.strokeStyle = color;
+//     ctx.stroke();
+// }
 
-    // The image/sprite for our enemies, this uses
-    // a helper we've provided to easily load images
+// -------------------- Enemies our player must avoid -------------------------------
+var Enemy = function(x, y, speed) {
     this.sprite = 'images/enemy-bug.png';
     this.x = x;
     this.y = y;
@@ -14,72 +18,62 @@ var Enemy = function(x, y, speed) {
     this.height = 67;
 };
 
-// Update the enemy's position, required method for game
+// Update the enemy's position
 // Parameter: dt, a time delta between ticks
 Enemy.prototype.update = function(dt) {
-    // You should multiply any movement by the dt parameter
-    // which will ensure the game runs at the same speed for
-    // all computers.
-    this.x = this.x + this.speed * dt;
+    this.x = this.x + this.speed * dt; // multiply any movement by the dt parameter which will ensure the game runs at the same speed for all computers.
     if (this.x > 606) {
         this.x = 0;
     }
 };
 
-// Drew boxes to figure out the 2D collisions detection
-// function drawBox(x, y, width, height, color) {
-//     ctx.beginPath();
-//     ctx.rect(x, y, width, height);
-//     ctx.lineWidth = 2;
-//     ctx.strokeStyle = color;
-//     ctx.stroke();
-// };
-
-// Draw the enemy on the screen, required method for game
+// Draw the enemy on the screen
 Enemy.prototype.render = function() {
-    ctx.drawImage(Resources.get(this.sprite), this.x, this.y)
-    // Drew boxes to figure out the 2D collisions detection
+    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+// Drew boxes to figure out the 2D collisions detection
     // drawBox(this.x, this.y + 76 , 100, 67, "yellow");
 };
 
+var allEnemies = [new Enemy(-430, 310, 50), new Enemy(-150, 310, 75), new Enemy(-100, 140, 100), new Enemy(-100, 140, 50), new Enemy(-100, 225, 25), new Enemy(-100, 225, 75)];
 
-// Now write your own player class
+
+// ----------------------------------- Player ----------------------------------------
 
 var Player = function(x, y, speed) {
     this.sprite = 'images/char-horn-girl.png';
     this.x = 300;
-    this.y = 480;
+    this.y = 400;
     this.speed = 100;
     this.width = 70;
     this.height = 75;
-}
+};
 
 Player.prototype.update = function(dt) {
-    this.checkCollisions();
-
-//Making sure the Player can not move off screen
+//Check if there is a collision between the player and the bugs
+    this.checkCollisionsBugs();
+//Make sure the Player can not move off screen
     if (this.x > 550) {
-        this.x = 0;
-    }
-    if (this.x < 0) {
         this.x = 500;
     }
-    if (this.y > 500) {
-        this.y = 480;
+    if (this.x < 0) {
+        this.x = 0;
+    }
+    if (this.y > 400) {
+        this.y = 400;
     }
     if (this.y < 50) {
         this.reset();
     }
 };
 
+// Draw the player on the screen
 Player.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-// Drew boxes to figure out the 2D collisions detection
+// Draw boxes to figure out the 2D collisions detection
     // drawBox(this.x + 8, this.y + 60, 77, 80, "red");
 };
-// This class requires an update(), render() and
-// a handleInput() method.
 
+//Make player move up/down/right/left depending on the key pressed
 Player.prototype.handleInput = function(key) {
     if (key == "left") {
         this.x = this.x - 100;
@@ -95,26 +89,8 @@ Player.prototype.handleInput = function(key) {
     }
 };
 
-var Rock = function(x, y) {
-    this.sprite = 'images/Rock.png';
-    this.x = x;
-    this.y = y
-}
 
-Rock.prototype.render = function() {
-    ctx.drawImage(Resources.get(this.sprite),this.x, this.y);
-};
-
-var allRocks = [new Rock(0, 480), new Rock(100, 480), new Rock(200, 480), new Rock(200, 390), new Rock(305, 50), new Rock(405, 50)];
-
-
-// Now instantiate your objects.
-// Place all enemy objects in an array called allEnemies
-
-var allEnemies = [new Enemy(-430, 310, 50), new Enemy(-150, 310, 75), new Enemy(-100, 140, 100), new Enemy(-100, 140, 50), new Enemy(-100, 225, 25), new Enemy(-100, 225, 75)];
-
-
-Player.prototype.checkCollisions = function() {
+Player.prototype.checkCollisionsBugs = function() {
     for (var i = 0; i < allEnemies.length; i++) {
         var enemy = allEnemies[i];
         if (enemy.x < (this.x + 8) + this.width &&
@@ -122,19 +98,60 @@ Player.prototype.checkCollisions = function() {
         (enemy.y + 76) < (this.y + 60) + this.height &&
         enemy.height + (enemy.y + 76) > (this.y + 60)) {
             this.reset();
-        };
-    };
+        }
+    }
+        // if (this.x < 300 && this.y > 350) {
+        //     this.x = 300; 
+        //     this.y = this.y;
+        // };
+    // };
 };
-// Place the player object in a variable called player
 
+// Place the player object in a variable called player
 var player = new Player();
 
 Player.prototype.reset = function() {
     this.x = 300;
-    this.y = 480;
+    this.y = 400;
 };
-// This listens for key presses and sends the keys to your
-// Player.handleInput() method. You don't need to modify this.
+
+// ----------------------------------- Rock ----------------------------------------
+
+var Rock = function(x, y) {
+    this.sprite = 'images/Rock.png';
+    this.x = x;
+    this.y = y;
+};
+
+//Draw the rock on the screen
+Rock.prototype.render = function() {
+    ctx.drawImage(Resources.get(this.sprite),this.x, this.y);
+
+// Draw boxes to figure out the 2D collisions detection
+    // drawBox(this.x + 8, this.y + 70, 85, 85, "blue");
+
+};
+
+var allRocks = [new Rock(200, 390), new Rock(305, 50), new Rock(405, 50)];
+
+// ----------------------------------- Win ----------------------------------------
+
+// var Win = function(x, y) {
+//     this.sprite = 'images/Selector.png';
+//     this.x = 500;
+//     this.y = 76;
+// };
+
+// Win.prototype.render = function() {
+//     ctx.drawImage(Resources.get(this.sprite),this.x, this.y);
+//     drawBox(this.x + 8, this.y + 70, 85, 85, "green");
+// };
+
+// var win = new Win();
+
+//----------------------------------- Event listener ------------------------------
+
+// Listen for key presses and sends the keys to the Player.handleInput() method.
 document.addEventListener('keyup', function(e) {
     var allowedKeys = {
         37: 'left',
