@@ -115,7 +115,7 @@ Player.prototype.reset = function() {
     this.y = 400;
 };
 
-// ----------------------------------- Rock ----------------------------------------
+// ----------------------------------- Obstacles : Rock & Trees & Bushes----------------------------------------
 
 var Rock = function(x, y) {
     this.sprite = 'images/Rock.png';
@@ -123,8 +123,18 @@ var Rock = function(x, y) {
     this.y = y;
 };
 
-//Draw the rock on the screen
 Rock.prototype.render = function() {
+    ctx.drawImage(Resources.get(this.sprite),this.x, this.y);
+};
+
+var Tree = function(x, y) {
+    this.sprite = 'images/tree-tall.png';
+    this.x = x;
+    this.y = y;
+};
+
+//Draw the rock on the screen
+Tree.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite),this.x, this.y);
 
 // Draw boxes to figure out the 2D collisions detection
@@ -132,22 +142,36 @@ Rock.prototype.render = function() {
 
 };
 
-var allRocks = [new Rock(200, 390), new Rock(305, 50), new Rock(405, 50)];
+var allObstacles = [new Rock(200, 390), new Tree(305, 50), new Rock(405, 50), new Rock(205, 50), new Rock(105, 390)];
 
 // ----------------------------------- Win ----------------------------------------
 
 var WinGame = function(x, y) {
-    this.sprite = 'images/Selector.png';
-    this.x = 500;
-    this.y = 76;
+    this.sprite = 'images/chest-closed.png';
+    this.x = 510;
+    this.y = 70;
 };
 
 WinGame.prototype.render = function() {
-    ctx.drawImage(Resources.get(this.sprite),this.x, this.y);
-    drawBox(this.x + 8, this.y + 70, 85, 85, "green");
+    ctx.drawImage(Resources.get(this.sprite),this.x, this.y, 91,135);
 };
 
 var winGame = new WinGame();
+
+// ----------------------------------- Items ----------------------------------------
+
+var Item = function(x, y, sprite) {
+    this.sprite = sprite;
+    this.x = x;
+    this.y = y;
+    this.height = 10;
+};
+
+Item.prototype.render = function() {
+    ctx.drawImage(Resources.get(this.sprite),this.x, this.y, 61, 103);
+};
+
+var allItems = [new Item(20, 440, 'images/Key.png'), new Item(120, 115, 'images/Heart.png')];
 
 //----------------------------------- Event listener ------------------------------
 

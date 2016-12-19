@@ -150,11 +150,15 @@ var Engine = (function(global) {
         allEnemies.forEach(function(enemy) {
             enemy.render();
         });
-        player.render();
-        allRocks.forEach(function(rock) {
-            rock.render();
+        allObstacles.forEach(function(obstacle) {
+            obstacle.render();
         });
         winGame.render();
+        allItems.forEach(function(item) {
+            item.render();
+        });
+        player.render();
+        
     }
 
     /* This function does nothing but it could have been a good place to
@@ -176,9 +180,11 @@ var Engine = (function(global) {
         'images/enemy-bug.png',
         'images/char-boy.png',
         'images/char-horn-girl.png',
-        'images/Selector.png',
         'images/Rock.png',
-        'images/Key.png'
+        'images/Key.png',
+        'images/Heart.png',
+        'images/chest-closed.png',
+        'images/tree-tall.png'
     ]);
 
     Resources.onReady(init);
