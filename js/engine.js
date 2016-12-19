@@ -154,7 +154,7 @@ var Engine = (function(global) {
         allRocks.forEach(function(rock) {
             rock.render();
         });
-        // win.render();
+        winGame.render();
     }
 
     /* This function does nothing but it could have been a good place to
