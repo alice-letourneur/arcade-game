@@ -21,3 +21,12 @@ Use the arrow keys ↑ → ↓ ←, to move the girl.
 
 Help the girl to cross the road avoiding the bugs.
 
+**To Do**
+- [x] Player cannot move off canvas
+- [x] Player starts from the beginning when colliding with ennemy
+- [x] Add obstacles to canvas
+- [x] Add items to collect to canvas
+- [ ] Make items collectible
+- [ ] Make player unable to move further when colliding with obstacles
+- [ ] Add life counter
+- [ ] Add sound effect
