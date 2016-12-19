@@ -19,7 +19,8 @@ Use the arrow keys ↑ → ↓ ←, to move the girl.
 
 **Objective**
 
-Help the girl to cross the road avoiding the bugs.
+Help the girl to collect the key to open the treasure chest. 
+Make sure the girl avoids the bugs when crossing the road.
 
 **To Do**
 - [x] Player cannot move off canvas
