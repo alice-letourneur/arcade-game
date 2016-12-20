@@ -28,6 +28,6 @@ Make sure the girl avoids the bugs when crossing the road.
 - [x] Add obstacles to canvas
 - [x] Add items to collect to canvas
 - [ ] Make items collectible
-- [ ] Make player unable to move further when colliding with obstacles
+- [x] Make player unable to move further when colliding with obstacles
 - [ ] Add life counter
 - [ ] Add sound effect
