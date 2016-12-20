@@ -56,6 +56,8 @@ Player.prototype.update = function(dt) {
     this.checkCollisionsBugs();
 //Check if there is a collision between the player and the obstacles (rocks or trees)
     this.checkCollisionsObstacles();
+//Check if there is a collision between the player and the items (key or heart)
+    this.checkCollisionsItems();
 //Make sure the Player can not move off screen
     if (this.x > 550) {
         this.x = 500;
@@ -127,6 +129,19 @@ Player.prototype.checkCollisionsObstacles = function() {
     }
 };
 
+//Check if Player collided with an item
+Player.prototype.checkCollisionsItems = function() {
+    for (var i = 0; i < allItems.length; i++) {
+        var item = allItems[i];
+        if ((item.x + 4) < (this.x + 8) + this.width &&
+        (item.x + 4) + item.width > (this.x + 8) &&
+        (item.y + 30) < (this.y + 60) + this.height &&
+        item.height + (item.y + 30) > (this.y + 60)) {
+            allItems.splice(i, 1);
+        }
+    }
+};
+
 var player = new Player();
 
 Player.prototype.reset = function() {
@@ -146,8 +161,8 @@ var Rock = function(x, y) {
     this.sprite = 'images/Rock.png';
     this.x = x;
     this.y = y;
-    this.width = 100;
-    this.height = 67;
+    this.width = 101;
+    this.height = 83;
 };
 
 //Draw the rock on the screen
@@ -163,8 +178,8 @@ var Tree = function(x, y) {
     this.sprite = 'images/tree-tall.png';
     this.x = x;
     this.y = y;
-    this.width = 100;
-    this.height = 67;
+    this.width = 101;
+    this.height = 83;
 };
 
 //Draw the tree on the screen
@@ -199,7 +214,8 @@ var Item = function(x, y, sprite) {
     this.sprite = sprite;
     this.x = x;
     this.y = y;
-    this.height = 10;
+    this.height = 53;
+    this.width = 57;
 };
 
 //Draw the items (key, heart) on the screen

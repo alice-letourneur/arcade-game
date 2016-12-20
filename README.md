@@ -27,7 +27,8 @@ Make sure the girl avoids the bugs when crossing the road.
 - [x] Player starts from the beginning when colliding with ennemy
 - [x] Add obstacles to canvas
 - [x] Add items to collect to canvas
-- [ ] Make items collectible
+- [x] Make items collectible
 - [x] Make player unable to move further when colliding with obstacles
 - [ ] Add life counter
 - [ ] Add sound effect
+- [ ] Add a "You win !" screen and a "Game Over" screen
