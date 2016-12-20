@@ -9,6 +9,7 @@
 // }
 
 // -------------------- Enemies our player must avoid -------------------------------
+//Create my Enemy class
 var Enemy = function(x, y, speed) {
     this.sprite = 'images/enemy-bug.png';
     this.x = x;
@@ -30,7 +31,7 @@ Enemy.prototype.update = function(dt) {
 // Draw the enemy on the screen
 Enemy.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-// Drew boxes to figure out the 2D collisions detection
+// Draw boxes to figure out the 2D collisions detection
     // drawBox(this.x, this.y + 76 , 100, 67, "yellow");
 };
 
@@ -39,6 +40,7 @@ var allEnemies = [new Enemy(-430, 310, 50), new Enemy(-150, 310, 75), new Enemy(
 
 // ----------------------------------- Player ----------------------------------------
 
+//Create my Player class
 var Player = function(x, y, speed) {
     this.sprite = 'images/char-horn-girl.png';
     this.x = 300;
@@ -48,9 +50,12 @@ var Player = function(x, y, speed) {
     this.height = 75;
 };
 
+
 Player.prototype.update = function(dt) {
 //Check if there is a collision between the player and the bugs
     this.checkCollisionsBugs();
+//Check if there is a collision between the player and the obstacles (rocks or trees)
+    this.checkCollisionsObstacles();
 //Make sure the Player can not move off screen
     if (this.x > 550) {
         this.x = 500;
@@ -73,8 +78,15 @@ Player.prototype.render = function() {
     // drawBox(this.x + 8, this.y + 60, 77, 80, "red");
 };
 
+//Save position of the player before it moves again
+Player.prototype.savePreviousPosition = function() {
+    previousX = this.x;
+    previousY = this.y;
+};
+
 //Make player move up/down/right/left depending on the key pressed
 Player.prototype.handleInput = function(key) {
+    this.savePreviousPosition();
     if (key == "left") {
         this.x = this.x - 100;
     }
@@ -89,7 +101,7 @@ Player.prototype.handleInput = function(key) {
     }
 };
 
-
+//Check if Player collided with a bug
 Player.prototype.checkCollisionsBugs = function() {
     for (var i = 0; i < allEnemies.length; i++) {
         var enemy = allEnemies[i];
@@ -100,14 +112,21 @@ Player.prototype.checkCollisionsBugs = function() {
             this.reset();
         }
     }
-        // if (this.x < 300 && this.y > 350) {
-        //     this.x = 300; 
-        //     this.y = this.y;
-        // };
-    // };
 };
 
-// Place the player object in a variable called player
+//Check if Player collided with an obstacle
+Player.prototype.checkCollisionsObstacles = function() {
+    for (var i = 0; i < allObstacles.length; i++) {
+        var obstacle = allObstacles[i];
+        if ((obstacle.x - 1) < (this.x + 8) + this.width &&
+        (obstacle.x - 1) + obstacle.width > (this.x + 8) &&
+        (obstacle.y + 77) < (this.y + 60) + this.height &&
+        obstacle.height + (obstacle.y + 77) > (this.y + 60)) {
+            this.backPreviousPosition();
+        }
+    }
+};
+
 var player = new Player();
 
 Player.prototype.reset = function() {
@@ -115,51 +134,67 @@ Player.prototype.reset = function() {
     this.y = 400;
 };
 
-// ----------------------------------- Obstacles : Rock & Trees & Bushes----------------------------------------
+//Restore the previous position of the Player
+Player.prototype.backPreviousPosition = function() {
+    this.x = previousX;
+    this.y = previousY;
+};
 
+// ----------------------------------- Obstacles : Rock & Trees & Bushes----------------------------------------
+//Create my Rock class
 var Rock = function(x, y) {
     this.sprite = 'images/Rock.png';
     this.x = x;
     this.y = y;
+    this.width = 100;
+    this.height = 67;
 };
 
+//Draw the rock on the screen
 Rock.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite),this.x, this.y);
+// Draw boxes to figure out the 2D collisions detection
+    // drawBox(this.x - 1, this.y + 77, 101, 83, "green");
+
 };
 
+//Create my Tree class
 var Tree = function(x, y) {
     this.sprite = 'images/tree-tall.png';
     this.x = x;
     this.y = y;
+    this.width = 100;
+    this.height = 67;
 };
 
-//Draw the rock on the screen
+//Draw the tree on the screen
 Tree.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite),this.x, this.y);
-
 // Draw boxes to figure out the 2D collisions detection
-    // drawBox(this.x + 8, this.y + 70, 85, 85, "blue");
-
+    // drawBox(this.x - 1, this.y + 77, 101, 83, "blue");
 };
 
-var allObstacles = [new Rock(200, 390), new Tree(305, 50), new Rock(405, 50), new Rock(205, 50), new Rock(105, 390)];
+var allObstacles = [new Rock(200, 390), new Tree(305, 55), new Rock(405, 55), new Rock(205, 55), new Rock(105, 390)];
 
 // ----------------------------------- Win ----------------------------------------
 
-var WinGame = function(x, y) {
+//Create my Chest class
+var Chest = function(x, y) {
     this.sprite = 'images/chest-closed.png';
     this.x = 510;
     this.y = 70;
 };
 
-WinGame.prototype.render = function() {
+//Draw the chest on the screen
+Chest.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite),this.x, this.y, 91,135);
 };
 
-var winGame = new WinGame();
+var chest = new Chest();
 
 // ----------------------------------- Items ----------------------------------------
 
+//Create my Item class for the key and the heart
 var Item = function(x, y, sprite) {
     this.sprite = sprite;
     this.x = x;
@@ -167,11 +202,15 @@ var Item = function(x, y, sprite) {
     this.height = 10;
 };
 
+//Draw the items (key, heart) on the screen
 Item.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite),this.x, this.y, 61, 103);
+// Draw boxes to figure out the 2D collisions detection
+    // drawBox(this.x + 4, this.y + 30, 53, 57, "purple");
+
 };
 
-var allItems = [new Item(20, 440, 'images/Key.png'), new Item(120, 115, 'images/Heart.png')];
+var allItems = [new Item(20, 445, 'images/Key.png'), new Item(120, 115, 'images/Heart.png')];
 
 //----------------------------------- Event listener ------------------------------
 

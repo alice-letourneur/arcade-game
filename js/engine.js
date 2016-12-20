@@ -153,7 +153,7 @@ var Engine = (function(global) {
         allObstacles.forEach(function(obstacle) {
             obstacle.render();
         });
-        winGame.render();
+        chest.render();
         allItems.forEach(function(item) {
             item.render();
         });
