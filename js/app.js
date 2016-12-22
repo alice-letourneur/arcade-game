@@ -193,7 +193,7 @@ Tree.prototype.render = function() {
 
 var allObstacles = [new Rock(200, 390), new Tree(305, 55), new Rock(405, 55), new Rock(205, 55), new Rock(105, 390)];
 
-// ----------------------------------- Win ----------------------------------------
+// ----------------------------------- Chest ----------------------------------------
 
 //Create my Chest class
 var Chest = function(x, y) {
@@ -242,13 +242,28 @@ var Life = function(x, y) {
 //Draw the items (key, heart) on the screen
 Life.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite),this.x, this.y, 30, 50);
-// Draw boxes to figure out the 2D collisions detection
-    // drawBox(this.x + 4, this.y + 30, 53, 57, "purple");
-
 };
 
 var allLife = [new Life(0, 0), new Life(40, 0), new Life(80, 0)];
 
+//----------------------------------- Game Over -----------------------------------
+
+var GameOver = function() {
+    this.x = 0;
+    this.y = 0;
+}
+
+GameOver.prototype.render = function() {
+        if (allLife.length === 0) {
+            ctx.fillStyle = "#222";
+            ctx.fillRect(0, 0, 700, 700);
+            ctx.fillStyle = "white";
+            ctx.font = "60px Comic Sans MS";
+            ctx.fillText("Game Over", 150, 300);
+        }
+    };
+
+var gameOver = new GameOver();
 
 //----------------------------------- Event listener ------------------------------
 
