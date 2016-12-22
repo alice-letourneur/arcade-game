@@ -112,6 +112,8 @@ Player.prototype.checkCollisionsBugs = function() {
         (enemy.y + 76) < (this.y + 60) + this.height &&
         enemy.height + (enemy.y + 76) > (this.y + 60)) {
             this.reset();
+            ctx.clearRect(0,0,110,50);
+            allLife.splice(allLife.length - 1, 1);
         }
     }
 };
@@ -227,6 +229,26 @@ Item.prototype.render = function() {
 };
 
 var allItems = [new Item(20, 445, 'images/Key.png'), new Item(120, 115, 'images/Heart.png')];
+
+
+//----------------------------------- Life counter -------------------------------
+
+var Life = function(x, y) {
+    this.sprite = 'images/Heart.png';
+    this.x = x;
+    this.y = y;
+}
+
+//Draw the items (key, heart) on the screen
+Life.prototype.render = function() {
+    ctx.drawImage(Resources.get(this.sprite),this.x, this.y, 30, 50);
+// Draw boxes to figure out the 2D collisions detection
+    // drawBox(this.x + 4, this.y + 30, 53, 57, "purple");
+
+};
+
+var allLife = [new Life(0, 0), new Life(40, 0), new Life(80, 0)];
+
 
 //----------------------------------- Event listener ------------------------------
 
