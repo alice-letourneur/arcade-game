@@ -155,14 +155,15 @@ Player.prototype.checkCollisionsHearts = function() {
         (heart.x + 4) + heart.width > (this.x + 8) &&
         (heart.y + 30) < (this.y + 60) + this.height &&
         heart.height + (heart.y + 30) > (this.y + 60)) {
-            if (allLife.length === 1) { 
-                allHearts.splice(i, 1);
-                allLife.splice(1, 0, "Life(40, 0)");
-            }
             if (allLife.length === 2) {
                 allHearts.splice(i, 1);
-                allLife.splice(2, 0, "Life(80, 0)");                     
+                allLife.push(new Life(80, 0));
             }
+            if (allLife.length === 1) { 
+                allHearts.splice(i, 1);
+                allLife.push(new Life(40, 0));
+            }
+
         }
     }
 };
