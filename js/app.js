@@ -56,8 +56,11 @@ Player.prototype.update = function(dt) {
     this.checkCollisionsBugs();
 //Check if there is a collision between the player and the obstacles (rocks or trees)
     this.checkCollisionsObstacles();
-//Check if there is a collision between the player and the items (key or heart)
-    this.checkCollisionsItems();
+//Check if there is a collision between the player and the key
+    this.checkCollisionsKeys();
+//Check if there is a collision between the player and the heart
+    this.checkCollisionsHearts();
+
 //Make sure the Player can not move off screen
     if (this.x > 550) {
         this.x = 500;
@@ -131,15 +134,35 @@ Player.prototype.checkCollisionsObstacles = function() {
     }
 };
 
-//Check if Player collided with an item
-Player.prototype.checkCollisionsItems = function() {
-    for (var i = 0; i < allItems.length; i++) {
-        var item = allItems[i];
-        if ((item.x + 4) < (this.x + 8) + this.width &&
-        (item.x + 4) + item.width > (this.x + 8) &&
-        (item.y + 30) < (this.y + 60) + this.height &&
-        item.height + (item.y + 30) > (this.y + 60)) {
-            allItems.splice(i, 1);
+//Check if Player collided with a key
+Player.prototype.checkCollisionsKeys = function() {
+    for (var i = 0; i < allKeys.length; i++) {
+        var key = allKeys[i];
+        if ((key.x + 4) < (this.x + 8) + this.width &&
+        (key.x + 4) + key.width > (this.x + 8) &&
+        (key.y + 30) < (this.y + 60) + this.height &&
+        key.height + (key.y + 30) > (this.y + 60)) {
+            allKeys.splice(i, 1);
+        }
+    }
+};
+
+//Check if Player collided with a heart
+Player.prototype.checkCollisionsHearts = function() {
+    for (var i = 0; i < allHearts.length; i++) {
+        var heart = allHearts[i];
+        if ((heart.x + 4) < (this.x + 8) + this.width &&
+        (heart.x + 4) + heart.width > (this.x + 8) &&
+        (heart.y + 30) < (this.y + 60) + this.height &&
+        heart.height + (heart.y + 30) > (this.y + 60)) {
+            if (allLife.length === 1) { 
+                allHearts.splice(i, 1);
+                allLife.splice(1, 0, "new Life(40, 0)");
+            }
+            if (allLife.length === 2) {
+                allHearts.splice(i, 1);
+                allLife.splice(2, 0, "new Life(80, 0)");                     
+            }
         }
     }
 };
@@ -212,8 +235,8 @@ var chest = new Chest();
 // ----------------------------------- Items ----------------------------------------
 
 //Create my Item class for the key and the heart
-var Item = function(x, y, sprite) {
-    this.sprite = sprite;
+var Key = function(x, y) {
+    this.sprite = 'images/Key.png';
     this.x = x;
     this.y = y;
     this.height = 53;
@@ -221,16 +244,33 @@ var Item = function(x, y, sprite) {
 };
 
 //Draw the items (key, heart) on the screen
-Item.prototype.render = function() {
+Key.prototype.render = function() {
+    ctx.drawImage(Resources.get(this.sprite),this.x, this.y, 61, 103);
+// Draw boxes to figure out the 2D collisions detection
+    // drawBox(this.x + 4, this.y + 30, 53, 57, "purple");
+};
+
+var allKeys = [new Key(20, 445)];
+
+var Heart = function(x, y) {
+    this.sprite = 'images/Heart.png';
+    this.x = x;
+    this.y = y;
+    this.height = 53;
+    this.width = 57;
+};
+
+//Draw the items (key, heart) on the screen
+Heart.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite),this.x, this.y, 61, 103);
 // Draw boxes to figure out the 2D collisions detection
     // drawBox(this.x + 4, this.y + 30, 53, 57, "purple");
 
 };
 
-var allItems = [new Item(20, 445, 'images/Key.png'), new Item(120, 115, 'images/Heart.png')];
+var allHearts = [new Heart(120, 115)];
 
-
+var keyCollected = [];
 //----------------------------------- Life counter -------------------------------
 
 var Life = function(x, y) {
@@ -265,6 +305,25 @@ GameOver.prototype.render = function() {
 
 var gameOver = new GameOver();
 
+//----------------------------------- Winner -----------------------------------
+
+var WinningGame = function() {
+    this.x = 0;
+    this.y = 0;
+}
+
+WinningGame.prototype.render = function() {
+        if (keyCollected.length === 1 && player.x === 500 && player.y === 76) {
+            ctx.fillStyle = "#222";
+            ctx.fillRect(0, 0, 700, 700);
+            ctx.fillStyle = "white";
+            ctx.font = "60px Comic Sans MS";
+            ctx.fillText("Congratulations ! You've open the treasure chest.", 150, 300);
+        }
+    };
+
+var winningGame = new WinningGame();
+
 //----------------------------------- Event listener ------------------------------
 
 // Listen for key presses and sends the keys to the Player.handleInput() method.
@@ -273,7 +332,8 @@ document.addEventListener('keyup', function(e) {
         37: 'left',
         38: 'up',
         39: 'right',
-        40: 'down'
+        40: 'down',
+        32: 'start'
     };
 
     player.handleInput(allowedKeys[e.keyCode]);

@@ -155,13 +155,17 @@ var Engine = (function(global) {
             obstacle.render();
         });
         chest.render();
-        allItems.forEach(function(item) {
-            item.render();
+        allKeys.forEach(function(key) {
+            key.render();
+        });
+        allHearts.forEach(function(heart) {
+            heart.render();
         });
         allLife.forEach(function(life) {
             life.render();
         });
         player.render();
+        winningGame.render();
         gameOver.render();
 
     }
