@@ -29,6 +29,6 @@ Make sure the girl avoids the bugs when crossing the road.
 - [x] Add items to collect to canvas
 - [x] Make items collectible
 - [x] Make player unable to move further when colliding with obstacles
-- [ ] Add life counter
-- [ ] Add sound effect
-- [ ] Add a "You win !" screen and a "Game Over" screen
+- [x] Add life counter
+- [x] Add key counter
+- [x] Add a "You win !" screen and a "Game Over" screen

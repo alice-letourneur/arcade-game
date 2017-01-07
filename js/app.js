@@ -104,6 +104,9 @@ Player.prototype.handleInput = function(key) {
     if (key == "down") {
         this.y = this.y + 81;
     }
+    if  (key == "start") {
+        location.reload();
+    }
 };
 
 //Check if Player collided with a bug
@@ -143,6 +146,9 @@ Player.prototype.checkCollisionsKeys = function() {
         (key.y + 30) < (this.y + 60) + this.height &&
         key.height + (key.y + 30) > (this.y + 60)) {
             allKeys.splice(i, 1);
+            keyCollected.splice(0, 0, 1);
+            ctx.drawImage(Resources.get('images/Key.png'),120, -10, 40, 60);
+
         }
     }
 };
@@ -163,7 +169,6 @@ Player.prototype.checkCollisionsHearts = function() {
                 allHearts.splice(i, 1);
                 allLife.push(new Life(40, 0));
             }
-
         }
     }
 };
@@ -301,6 +306,9 @@ GameOver.prototype.render = function() {
             ctx.fillStyle = "white";
             ctx.font = "60px Comic Sans MS";
             ctx.fillText("Game Over", 150, 300);
+            ctx.fillStyle = "grey";
+            ctx.font = "20px Comic Sans MS";
+            ctx.fillText("Press the SPACEBAR to play again...", 140, 400);
         }
     };
 
@@ -318,12 +326,18 @@ WinningGame.prototype.render = function() {
             ctx.fillStyle = "#222";
             ctx.fillRect(0, 0, 700, 700);
             ctx.fillStyle = "white";
-            ctx.font = "60px Comic Sans MS";
-            ctx.fillText("Congratulations ! You've open the treasure chest.", 150, 300);
+            ctx.font = "50px Comic Sans MS";
+            ctx.fillText("Congratulations !", 110, 250);
+            ctx.font = "30px Comic Sans MS";
+            ctx.fillText("You've opened the treasure chest.", 70, 350);
+            ctx.fillStyle = "grey";
+            ctx.font = "20px Comic Sans MS";
+            ctx.fillText("Press the SPACEBAR to play again...", 130, 450);
         }
     };
 
 var winningGame = new WinningGame();
+
 
 //----------------------------------- Event listener ------------------------------
 
