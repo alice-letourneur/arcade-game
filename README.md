@@ -17,6 +17,8 @@ OR
 
 Use the arrow keys ↑ → ↓ ←, to move the girl.
 
+Press the SPACEBAR to start a new game.
+
 **Objective**
 
 Help the girl to collect the key to open the treasure chest. 
