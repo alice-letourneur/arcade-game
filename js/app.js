@@ -249,7 +249,7 @@ var Key = function(x, y) {
     this.width = 57;
 };
 
-//Draw the items (key, heart) on the screen
+//Draw the key on the screen
 Key.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite),this.x, this.y, 61, 103);
 // Draw boxes to figure out the 2D collisions detection
@@ -266,7 +266,7 @@ var Heart = function(x, y) {
     this.width = 57;
 };
 
-//Draw the items (key, heart) on the screen
+//Draw the heart on the screen
 Heart.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite),this.x, this.y, 61, 103);
 // Draw boxes to figure out the 2D collisions detection
@@ -283,9 +283,9 @@ var Life = function(x, y) {
     this.sprite = 'images/Heart.png';
     this.x = x;
     this.y = y;
-}
+};
 
-//Draw the items (key, heart) on the screen
+//Draw the life counter on the screen
 Life.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite),this.x, this.y, 30, 50);
 };
@@ -297,8 +297,9 @@ var allLife = [new Life(0, 0), new Life(40, 0), new Life(80, 0)];
 var GameOver = function() {
     this.x = 0;
     this.y = 0;
-}
+};
 
+//Draw the Game Over screen
 GameOver.prototype.render = function() {
         if (allLife.length === 0) {
             ctx.fillStyle = "#222";
@@ -319,8 +320,9 @@ var gameOver = new GameOver();
 var WinningGame = function() {
     this.x = 0;
     this.y = 0;
-}
+};
 
+//Draw the Winning screen
 WinningGame.prototype.render = function() {
         if (keyCollected.length === 1 && player.x === 500 && player.y === 76) {
             ctx.fillStyle = "#222";
